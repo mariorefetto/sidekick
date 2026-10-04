@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hooks_riverpod/legacy.dart';
 
 import '../fvm/flutter_config.service.dart';
+import '../fvm/fvm.provider.dart';
 import 'settings.dto.dart';
 import 'settings.service.dart';
 
@@ -48,7 +49,11 @@ class _SettingsStateNotifier extends StateNotifier<AllSettings> {
   Future<void> _checkFvmSettingsChanges(FvmSettings settings) async {
     final changed = settings != _prevState.fvm;
     if (changed) {
+      final cachePathChanged = settings.cachePath != _prevState.fvm.cachePath;
       await FVMClient.saveSettings(settings);
+
+      // Reload versions (and the directory watcher) from the new location
+      if (cachePathChanged) ref.invalidate(fvmCacheProvider);
     }
   }
 
