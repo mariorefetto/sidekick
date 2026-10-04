@@ -2,21 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../mdi_icons.dart';
+import 'package:sidekick/src/components/mdi_icons.dart';
 
-import '../../modules/fvm/fvm.provider.dart';
-import 'typography.dart';
+import 'package:sidekick/src/modules/fvm/fvm.provider.dart';
+import 'package:sidekick/src/components/atoms/typography.dart';
 
 class Console extends HookWidget {
-  final bool expand;
-  final bool processing;
-  final Function()? onExpand;
   const Console({
     this.expand = false,
     this.processing = false,
     this.onExpand,
     super.key,
   });
+  final bool expand;
+  final bool processing;
+  final Function()? onExpand;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,16 @@ class Console extends HookWidget {
     final lines = useState<List<String>>(['']);
     final consoleScrollController = ScrollController();
 
-    useEffect(() {
-      lines.value.insert(0, output.data ?? '');
-      if (lines.value.length > 100) {
-        lines.value.removeAt(lines.value.length - 1);
-      }
-      return;
-    }, [output]);
+    useEffect(
+      () {
+        lines.value.insert(0, output.data ?? '');
+        if (lines.value.length > 100) {
+          lines.value.removeAt(lines.value.length - 1);
+        }
+        return;
+      },
+      [output],
+    );
 
     return AnimatedCrossFade(
       duration: const Duration(milliseconds: 250),
@@ -64,12 +67,11 @@ class Console extends HookWidget {
                 firstChild: Container(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                          width: MediaQuery.of(context).size.width - 100,
-                          child: ConsoleText(lines.value.first)),
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: ConsoleText(lines.value.first),
+                      ),
                     ],
                   ),
                 ),
@@ -106,11 +108,13 @@ class Console extends HookWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 8),
+                        vertical: 8,
+                        horizontal: 8,
+                      ),
                       child: expand
-                          ? Icon(MdiIcons.chevronDown)
-                          : Icon(MdiIcons.chevronUp),
-                    )
+                          ? const Icon(MdiIcons.chevronDown)
+                          : const Icon(MdiIcons.chevronUp),
+                    ),
                   ],
                 ),
               ),

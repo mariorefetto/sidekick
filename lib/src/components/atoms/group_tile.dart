@@ -36,7 +36,7 @@ class SkGroupTile extends HookWidget {
       duration: const Duration(milliseconds: 250),
       margin: isExpanded.value
           ? const EdgeInsets.fromLTRB(0, 10, 0, 10)
-          : const EdgeInsets.all(0),
+          : EdgeInsets.zero,
       decoration: BoxDecoration(
         border: Border.symmetric(
           horizontal: BorderSide(

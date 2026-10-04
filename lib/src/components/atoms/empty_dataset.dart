@@ -10,7 +10,7 @@ const _iconsPosition = [
     'left': 0.0,
     'right': 0.0,
     'bottom': 0.0,
-    'opacity': 0.2
+    'opacity': 0.2,
   },
   // Top Section
   {'size': 0.30, 'top': 0.0, 'left': 0.0, 'opacity': 0.25},
@@ -62,8 +62,9 @@ class EmptyDataset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgIcons = _buildIconsBackground(
-        icon: icon,
-        color: iconColor ?? Theme.of(context).textTheme.bodyLarge!.color!);
+      icon: icon,
+      color: iconColor ?? Theme.of(context).textTheme.bodyLarge!.color!,
+    );
 
     return Stack(
       children: [
@@ -71,7 +72,6 @@ class EmptyDataset extends StatelessWidget {
           opacity: opacity,
           child: Center(
             child: ClipRRect(
-              clipBehavior: Clip.antiAlias,
               child: SizedBox(
                 width: 450,
                 height: 300,

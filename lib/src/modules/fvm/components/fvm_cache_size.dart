@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sidekick/src/components/atoms/typography.dart';
+import 'package:sidekick/src/modules/common/utils/dir_stat.dart';
 import 'package:sidekick/src/modules/common/utils/helpers.dart';
-
-import '../../../components/atoms/typography.dart';
-import '../../../modules/common/utils/dir_stat.dart';
-import '../fvm.provider.dart';
+import 'package:sidekick/src/modules/fvm/fvm.provider.dart';
 
 /// Fvm cache size
 class FvmCacheSize extends HookConsumerWidget {
@@ -51,7 +50,7 @@ class FvmCacheSize extends HookConsumerWidget {
                   Caption(cacheSize.friendlySize),
                   Caption(context.i18n('modules:fvm.components.unused')),
                 ],
-              )
+              ),
             ],
           ),
         ),

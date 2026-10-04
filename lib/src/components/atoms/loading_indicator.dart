@@ -12,7 +12,6 @@ class SkLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SpinKitFadingCube(
       color: Colors.white24,
-      size: 50.0,
     );
   }
 }

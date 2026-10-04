@@ -13,19 +13,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sidekick/i18n/language_manager.dart';
+import 'package:sidekick/src/modules/common/app_shell.dart';
+import 'package:sidekick/src/modules/common/constants.dart';
 import 'package:sidekick/src/modules/common/utils/migrate_files.dart';
+import 'package:sidekick/src/modules/fvm/fvm_home.dart';
+import 'package:sidekick/src/modules/projects/project.dto.dart';
+import 'package:sidekick/src/modules/projects/projects.service.dart';
+import 'package:sidekick/src/modules/settings/settings.dto.dart';
+import 'package:sidekick/src/modules/settings/settings.service.dart';
+import 'package:sidekick/src/modules/settings/settings.utils.dart';
+import 'package:sidekick/src/screens/error_db_screen.dart';
+import 'package:sidekick/src/theme.dart';
 import 'package:window_manager/window_manager.dart';
-
-import 'src/modules/common/app_shell.dart';
-import 'src/modules/common/constants.dart';
-import 'src/modules/fvm/fvm_home.dart';
-import 'src/modules/projects/project.dto.dart';
-import 'src/modules/projects/projects.service.dart';
-import 'src/modules/settings/settings.dto.dart';
-import 'src/modules/settings/settings.service.dart';
-import 'src/modules/settings/settings.utils.dart';
-import 'src/screens/error_db_screen.dart';
-import 'src/theme.dart';
 
 void main() async {
   final fvmHome = await resolveShellFvmHome();

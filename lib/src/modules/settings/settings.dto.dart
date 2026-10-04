@@ -6,19 +6,18 @@ import 'package:hive/hive.dart';
 import 'package:i18next/i18next.dart';
 import 'package:sidekick/i18n/language_manager.dart';
 
-import 'settings.utils.dart';
+import 'package:sidekick/src/modules/settings/settings.utils.dart';
 
 /// All Settings
 class AllSettings {
-  SidekickSettings sidekick;
-  FvmSettings fvm;
-  FlutterSettings flutter;
-
   AllSettings({
     required this.fvm,
     required this.flutter,
     required this.sidekick,
   });
+  SidekickSettings sidekick;
+  FvmSettings fvm;
+  FlutterSettings flutter;
 
   static AllSettings create({
     SidekickSettings? sidekick,
@@ -57,17 +56,6 @@ class SidekickSettings {
           // options: I18NextOptions(formatter: languageManager.formatter),
         );
 
-  /// Storage key
-  static const key = 'settings_key';
-
-  bool onlyProjectsWithFvm;
-  List<String> projectPaths;
-  String themeMode;
-  I18NextLocalizationDelegate localizationsDelegate;
-  Locale? locale;
-  String? ide;
-  String? customIdeLocation;
-
   factory SidekickSettings.fromJson(String str) =>
       SidekickSettings.fromMap(json.decode(str));
 
@@ -76,7 +64,8 @@ class SidekickSettings {
     final locale = language != null
         ? Locale.fromSubtags(
             languageCode: (language as String).split('-')[0],
-            countryCode: language.split('-')[1])
+            countryCode: language.split('-')[1],
+          )
         : null;
 
     return SidekickSettings(
@@ -88,6 +77,17 @@ class SidekickSettings {
       customIdeLocation: json['customIdeLocation'],
     );
   }
+
+  /// Storage key
+  static const key = 'settings_key';
+
+  bool onlyProjectsWithFvm;
+  List<String> projectPaths;
+  String themeMode;
+  I18NextLocalizationDelegate localizationsDelegate;
+  Locale? locale;
+  String? ide;
+  String? customIdeLocation;
 
   /// Converts Master Secret to Json
   String toJson() => json.encode(toMap());
@@ -133,6 +133,17 @@ class FlutterSettings {
     this.web = false,
   });
 
+  /// Flutter settings from map
+  factory FlutterSettings.fromMap(Map<String, bool> map) {
+    return FlutterSettings(
+      analytics: map['analytics'] ?? false,
+      macos: map['macos'] ?? false,
+      windows: map['windows'] ?? false,
+      linux: map['linux'] ?? false,
+      web: map['web'] ?? false,
+    );
+  }
+
   /// Analytics enabled
   bool analytics;
 
@@ -147,17 +158,6 @@ class FlutterSettings {
 
   /// Web enabled
   bool web;
-
-  /// Flutter settings from map
-  factory FlutterSettings.fromMap(Map<String, bool> map) {
-    return FlutterSettings(
-      analytics: map['analytics'] ?? false,
-      macos: map['macos'] ?? false,
-      windows: map['windows'] ?? false,
-      linux: map['linux'] ?? false,
-      web: map['web'] ?? false,
-    );
-  }
 
   /// Flutter settings to map
   Map<String, bool> toMap() {
