@@ -6,6 +6,8 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+// ignore: implementation_imports
+import 'package:fvm/src/services/context.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
@@ -16,6 +18,7 @@ import 'package:window_manager/window_manager.dart';
 
 import 'src/modules/common/app_shell.dart';
 import 'src/modules/common/constants.dart';
+import 'src/modules/fvm/fvm_home.dart';
 import 'src/modules/projects/project.dto.dart';
 import 'src/modules/projects/projects.service.dart';
 import 'src/modules/settings/settings.dto.dart';
@@ -25,6 +28,21 @@ import 'src/screens/error_db_screen.dart';
 import 'src/theme.dart';
 
 void main() async {
+  final fvmHome = await resolveShellFvmHome();
+
+  if (fvmHome == null) {
+    await _main();
+  } else {
+    // Run the whole app in an FVM context pointing to the user's FVM_HOME
+    await ctx.run(
+      name: 'sidekick',
+      fvmDir: Directory(fvmHome),
+      body: _main,
+    );
+  }
+}
+
+Future<void> _main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await windowManager.ensureInitialized();
